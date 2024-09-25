@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Cédula</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+       
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+      
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+     
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .valido {
+            color: green;
+        }
+
+       
+        .no-valido {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Jeremy Peña te invita a validar tu cedula👇🏻 con Algoritmo del Módulo 10</h2>
+        <button onclick="validarCedulaPrompt()">Validar Cédula</button>
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function validarCedula(cedula) {
+        
+            cedula = cedula.replace(/\D/g, '');
+
+           
+            if (cedula.length !== 11) {
+                return false;
+            }
+
+            let suma = 0;
+
+          
+            for (let i = 0; i < cedula.length - 1; i++) {
+                let digito = parseInt(cedula[i]);
+
+                if (i % 2 !== 0) {
+                    digito *= 2;
+                }
+
+                
+                if (digito > 9) {
+                    digito -= 9;
+                }
+
+               
+                suma += digito;
+            }
+
+            const digitoVerificador = parseInt(cedula[cedula.length - 1]);
+
+     
+            const modulo = (10 - (suma % 10)) % 10;
+
+            return modulo === digitoVerificador;
+        }
+
+        function validarCedulaPrompt() {
+          
+            const cedula = prompt("Por favor, ingrese su cédula:");
+
+         
+            if (!cedula) {
+                alert("No se ha ingresado ninguna cédula.");
+                return;
+            }
+
+            const esValida = validarCedula(cedula);
+
+            const resultado = document.getElementById("resultado");
+            if (esValida) {
+                resultado.textContent = "La cédula es válida.";
+                resultado.className = "valido";
+            } else {
+                resultado.textContent = "La cédula no es válida.";
+                resultado.className = "no-valido";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
